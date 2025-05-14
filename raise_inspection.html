@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raise Inspection Call</title>
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      margin: 0 auto;
+    }
+    label, input, textarea {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Raise Inspection Call</h1>
+  <form id="raiseInspectionForm">
+    <label>PSM Mail ID: <input type="email" name="psmMail" required></label>
+    <label>PO Number: <input type="text" name="poNumber" required></label>
+    <label>Date of Sending Call: <input type="date" name="dateSendingCall" required></label>
+    <label>Inspection Required On: <input type="date" name="inspectionRequiredOn" required></label>
+    <label>Project Code: <input type="text" name="projectCode" required></label>
+    <label>Project Name: <input type="text" name="projectName" required></label>
+    <label>Contact Person Name: <input type="text" name="contactPersonName" required></label>
+    <label>Contact Person Mobile: <input type="text" name="contactPersonMobile" required></label>
+    <label>Vendor Name: <input type="text" name="vendorName" required></label>
+    <label>Place of Inspection: <input type="text" name="placeOfInspection" required></label>
+    <label>Item Description: <textarea name="itemDescription" required></textarea></label>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('raiseInspectionForm');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const callNumber = Math.floor(Math.random() * 9000) + 1000;
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      localStorage.setItem('call_' + callNumber, JSON.stringify({ callNumber, ...data }));
+
+      alert('Inspection Call Raised! Call Number: ' + callNumber);
+    });
+  </script>
+</body>
+</html>

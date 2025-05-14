@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSM</title>
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      margin: 0 auto;
+    }
+    label, input {
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter PSM Details</h1>
+  <form id="psmLookupForm">
+    <label>Enter Inspection Call Number: <input type="text" id="psmCallNumber" required></label>
+    <button type="submit">Lookup</button>
+  </form>
+  <form id="psmForm" style="display:none">
+    <label>PSM Contact Person Name: <input type="text" name="psmContactPerson" required></label>
+    <label>QA Engineer Name: <input type="text" name="qaEngineerName" required></label>
+    <label>QA Engineer Email: <input type="email" name="qaEngineerEmail" required></label>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const psmLookupForm = document.getElementById('psmLookupForm');
+    const psmForm = document.getElementById('psmForm');
+
+    psmLookupForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const callNumber = document.getElementById('psmCallNumber').value;
+      const data = JSON.parse(localStorage.getItem('call_' + callNumber));
+      if (!data) {
+        alert('Inspection Call Number not found.');
+        return;
+      }
+
+      psmForm.style.display = 'block';
+    });
+
+    psmForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(psmForm);
+      const psmData = Object.fromEntries(formData.entries());
+
+      alert('PSM Data Submitted!');
+      console.log('PSM Data:', psmData);
+    });
+  </script>
+</body>
+</html>
